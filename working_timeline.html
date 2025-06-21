@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What If? The Zimmermann Telegram</title>
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --primary-blue: #1e3a8a;
+      --secondary-blue: #3b82f6;
+      --accent-gold: #f59e0b;
+      --text-dark: #1f2937;
+      --bg-light: #f8fafc;
+    }
+    body {
+      font-family: 'Assistant', 'Segoe UI', 'Tahoma', sans-serif;
+      background: var(--bg-light);
+      scroll-behavior: smooth;
+      color: var(--text-dark);
+    }
+    .hebrew {
+      font-family: 'Assistant', 'David', sans-serif;
+      direction: rtl;
+    }
+    /* Progress Bar */
+    .progress-bar {
+      position: fixed;
+      top: 0; left: 0;
+      width: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--secondary-blue), var(--accent-gold));
+      z-index: 1000;
+      transition: width 0.3s ease;
+    }
+    /* Image Utility */
+    .image-item {
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      margin-bottom: 1rem;
+    }
+    .image-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+    /* Timeline Styles */
+    .timeline-horizontal {
+      display: flex;
+      overflow-x: auto;
+      gap: 2rem;
+      padding: 2rem 0;
+      position: relative;
+    }
+    .timeline-horizontal::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--secondary-blue), var(--accent-gold), var(--secondary-blue));
+      border-radius: 2px;
+      transform: translateY(-50%);
+      z-index: 0;
+    }
+    .timeline-horizontal::-webkit-scrollbar {
+      height: 8px;
+    }
+    .timeline-horizontal::-webkit-scrollbar-track {
+      background: #e5e7eb;
+      border-radius: 4px;
+    }
+    .timeline-horizontal::-webkit-scrollbar-thumb {
+      background: var(--secondary-blue);
+      border-radius: 4px;
+    }
+    .timeline-item {
+      min-width: 300px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      padding: 1.5rem;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all 0.3s ease;
+      border: 3px solid transparent;
+      position: relative;
+      z-index: 1;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 16px;
+      height: 16px;
+      background: var(--secondary-blue);
+      border-radius: 50%;
+      border: 3px solid #fff;
+      z-index: 2;
+    }
+    .timeline-item:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+      border-color: var(--accent-gold);
+    }
+    .timeline-item.active {
+      border-color: var(--secondary-blue);
+    }
+    .timeline-item.active::before {
+      background: var(--accent-gold);
+      width: 20px;
+      height: 20px;
+      top: -10px;
+    }
+    .timeline-content {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(.4,0,.2,1);
+    }
+    .timeline-content.expanded {
+      max-height: 1000px;
+      opacity: 1;
+      margin-top: 1rem;
+    }
+    /* Scroll Indicators */
+    .scroll-indicator {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.9);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: background 0.3s ease;
+    }
+    .scroll-indicator:hover {
+      background: #fff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .scroll-left { left: 10px; }
+    .scroll-right { right: 10px; }
+    /* Scenes Styles */
+    .scenes-horizontal {
+      display: flex;
+      overflow-x: auto;
+      gap: 2rem;
+      padding: 2rem 0;
+      position: relative;
+    }
+    .scenes-horizontal::-webkit-scrollbar {
+      height: 8px;
+    }
+    .scenes-horizontal::-webkit-scrollbar-track {
+      background: #e5e7eb;
+      border-radius: 4px;
+    }
+    .scenes-horizontal::-webkit-scrollbar-thumb {
+      background: var(--secondary-blue);
+      border-radius: 4px;
+    }
+    .scene-card {
+      min-width: 280px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      padding: 1rem;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+    .scene-expanded-content {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(.4,0,.2,1);
+    }
+    .scene-card.expanded .scene-expanded-content {
+      max-height: 1000px;
+      opacity: 1;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body class="text-gray-900">
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- HERO -->
+  <section class="hero-gradient text-white py-20 text-center px-6 relative overflow-hidden fade-in-up">
+    <div class="absolute inset-0 opacity-10">
+      <div class="absolute top-10 left-10 w-20 h-20 border-2 border-white rounded-full animate-pulse"></div>
+      <div class="absolute bottom-20 right-20 w-16 h-16 border-2 border-white rounded-full animate-pulse delay-1000"></div>
+      <div class="absolute top-1/2 left-1/4 w-12 h-12 border-2 border-white rounded-full animate-pulse delay-500"></div>
+    </div>
+    <div class="relative z-10">
+      <h1 class="text-4xl md:text-6xl font-bold mb-6 hebrew">מה אם? השלכות מציאות אלטרנטיבית מברק צימרמן</h1>
+      <p class="text-xl mb-8 max-w-3xl mx-auto hebrew leading-relaxed">דמיינו עולם שבו המברק הסודי בין גרמניה למקסיקו שינה את מהלך ההיסטוריה ב-1917.</p>
+      <button onclick="document.getElementById('timeline').scrollIntoView({behavior:'smooth'})" class="btn-primary text-white px-8 py-4 rounded-full shadow-lg font-bold">🔍 גלו את קו הזמן</button>
+    </div>
+  </section>
+
+  <!-- FEATURED -->
+  <section id="featured" class="bg-white py-16 px-4 flex flex-col items-center fade-in-up">
+    <div class="image-item max-w-lg">
+      <img src="ZIMMERMAN TELEGRAM.jpeg" alt="Lego Carranza receiving the telegram">
+    </div>
+    <h2 class="text-3xl font-bold mb-2">Lego Carranza Receiving The Telegram</h2>
+    <p class="text-lg text-gray-600 hebrew">לגו קרנזה מקבל את המברק</p>
+  </section>
+
+  <!-- TIMELINE -->
+  <section id="timeline" class="py-16 max-w-full relative">
+    <div class="scroll-indicator scroll-left" onclick="scrollTimeline('left')">‹</div>
+    <div class="scroll-indicator scroll-right" onclick="scrollTimeline('right')">›</div>
+    <div class="timeline-horizontal" id="timelineContainer">
+      <!-- Repeat timeline items as before... -->
+      <div class="timeline-item" onclick="toggleExpand(0)">
+        <div class="text-center"><span class="text-2xl font-bold text-blue-600">ינואר 1917</span><p class="hebrew">גרמניה שולחת מברק סודי למקסיקו</p></div>
+        <div class="timeline-content expanded"><div class="image-item"><img src="ZIMMERMAN TELEGRAM.jpeg" alt="Zimmermann Telegram"></div></div>
+      </div>
+      <!-- ... other items ... -->
+    </div>
+  </section>
+
+  <!-- SCENES 2025 -->
+  <section id="scenes2025" class="py-16 bg-gradient-to-br from-gray-50 to-blue-50">
+    <div class="text-center mb-12 px-4">
+      <h2 class="text-4xl font-bold text-gray-800 mb-4 hebrew">סצנות מ-2025</h2>
+      <p class="text-xl text-gray-600 hebrew max-w-3xl mx-auto">איך נראה העולם היום?</p>
+    </div>
+    <div class="relative max-w-full">
+      <div class="scroll-indicator scroll-left" onclick="scrollScenes('left')">‹</div>
+      <div class="scroll-indicator scroll-right" onclick="scrollScenes('right')">›</div>
+      <div class="scenes-horizontal" id="scenesContainer">
+        <!-- Repeat scene cards as before... -->
+        <div class="scene-card" onclick="toggleSceneExpand(0)">
+          <div class="scene-image placeholder-image bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-2xl font-bold h-48">🏛️</div>
+          <div class="scene-content">
+            <h3 class="text-2xl font-bold mb-3 hebrew">ממשלת האיחוד האמריקני-מקסיקני</h3>
+            <p class="text-gray-600 hebrew leading-relaxed">בירת האיחוד החדשה, אספרנטה, שוכנת על הגבול.</p>
+            <div class="scene-expanded-content image-item"><img src="union-government-2025.jpg" alt="Union Government Building"></div>
+          </div>
+        </div>
+        <!-- ... other scenes ... -->
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Smooth scrolling for progress bar (optional) and update width
+    window.addEventListener('scroll', () => {
+      const scrollPos = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      document.getElementById('progressBar').style.width = `${(scrollPos / docHeight) * 100}%`;
+    });
+
+    function scrollTimeline(dir) {
+      document.getElementById('timelineContainer').scrollBy({ left: dir === 'left' ? -300 : 300, behavior: 'smooth' });
+    }
+    function scrollScenes(dir) {
+      document.getElementById('scenesContainer').scrollBy({ left: dir === 'left' ? -300 : 300, behavior: 'smooth' });
+    }
+    function toggleExpand(i) {
+      const contents = document.querySelectorAll('.timeline-content');
+      contents.forEach((c, idx) => {
+        if (idx === i) c.classList.toggle('expanded'); else c.classList.remove('expanded');
+      });
+    }
+    function toggleSceneExpand(i) {
+      const cards = document.querySelectorAll('.scene-card');
+      cards.forEach((card, idx) => {
+        if (idx === i) card.classList.toggle('expanded'); else card.classList.remove('expanded');
+      });
+    }
+  </script>
+</body>
+</html>

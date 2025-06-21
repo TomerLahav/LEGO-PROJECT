@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IR Project-The Zimmermann Telegram </title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-blue: #1e3a8a;
+      --secondary-blue: #3b82f6;
+      --accent-gold: #f59e0b;
+      --text-dark: #1f2937;
+      --bg-light: #f8fafc;
+    }
+    body {
+      font-family: 'Assistant', 'Segoe UI', 'Tahoma', sans-serif;
+      background: var(--bg-light);
+      scroll-behavior: smooth;
+    }
+    .hebrew {
+      font-family: 'Assistant', 'Arial', sans-serif;
+      direction: rtl;font-size: 2.5rem;
+    }
+    /* Easy image utility */
+    .image-item {
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      margin-bottom: 1rem;
+    }
+    .image-item img { width: 85%; height: auto; display: block; object-fit: cover; }
+    /* Progress bar */
+    .progress-bar { position: fixed; top:0; left:0; width:0; height:4px; background:linear-gradient(90deg,var(--secondary-blue),var(--accent-gold)); z-index:1000; transition:width .3s ease; }
+    /* Hero */
+    .hero-gradient { background: linear-gradient(135deg, var(--primary-blue) 20%, var(--secondary-blue) 50%, var(--accent-gold) 100%); }
+    .fade-in-up { animation: fadeInUp 0.8s ease-out; }
+    @keyframes fadeInUp { from { opacity:0; transform:translateY(30px);} to { opacity:1; transform:translateY(0);} }
+    /* Timeline */
+    .timeline-horizontal { display:flex; overflow-x:auto; gap:2rem; padding:2rem 0; position:relative; scroll-behavior:smooth; }
+    .timeline-horizontal::before { content:''; position:absolute; top:50%; left:0; right:0; height:4px; background: linear-gradient(90deg,var(--secondary-blue),var(--accent-gold),var(--secondary-blue)); border-radius:2px; z-index:0; }
+    .timeline-horizontal::-webkit-scrollbar { height:8px; }
+    .timeline-horizontal::-webkit-scrollbar-track { background:#e5e7eb; border-radius:4px; }
+    .timeline-horizontal::-webkit-scrollbar-thumb { background:var(--secondary-blue); border-radius:4px; }
+    .timeline-item { min-width:350px; background:#fff; border-radius:16px; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1); padding:1.5rem; cursor:pointer; flex-shrink:0; transition:all .3s ease; border:3px solid transparent; position:relative; z-index:1; }
+    .timeline-item::before { content:''; position:absolute; top:-8px; left:50%; transform:translateX(-50%); width:16px; height:16px; background:var(--secondary-blue); border-radius:50%; border:3px solid #fff; z-index:2; }
+    .timeline-item:hover { transform:translateY(-8px); box-shadow:0 20px 25px -5px rgba(0,0,0,0.1),0 10px 10px -5px rgba(0,0,0,0.04); border-color:var(--accent-gold); }
+    .timeline-item.active { border-color:var(--secondary-blue); box-shadow:0 20px 25px -5px rgba(59,130,246,0.25); }
+    .timeline-item.active::before { background:var(--accent-gold); width:20px; height:20px; top:-10px; }
+    .timeline-content { max-height:0; overflow:hidden; opacity:0; transition:all .4s cubic-bezier(.4,0,.2,1); }
+    .timeline-content.expanded { max-height:900px; opacity:1; margin-top:1rem; overflow: visible;}
+    /* Scroll indicators */
+    .scroll-indicator { position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.9); border-radius:50%; width:40px; height:40px; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all .3s ease; z-index:10; }
+    .scroll-left { left:10px; }
+    .scroll-right { right:10px; }
+    .scroll-indicator:hover { background:#fff; box-shadow:0 4px 12px rgba(0,0,0,0.15); }
+    /* Responsive */
+    @media(max-width:400px) {
+      .timeline-horizontal { gap:1rem; padding:1rem 0; }
+      .timeline-item { min-width:280px; padding:1rem; }
+      .hero-gradient h1 { font-size:2rem; }
+    }
+.scene-expanded-content {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(.4,0,.2,1);
+}
+.scene-card.expanded .scene-expanded-content {
+  max-height: 1200px;
+  opacity: 1;
+  margin-top: 2rem;
+  overflow:visible;
+}
+#scenes2025 .scene-expanded-content video {
+  max-width: 40em;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  display: block;
+}
+
+  </style>
+</head>
+<body class="text-gray-900">
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- HERO -->
+  <section class="hero-gradient text-white py-20 text-center px-6 relative overflow-hidden fade-in-up">
+    <div class="absolute inset-0 opacity-10">
+      <div class="absolute top-10 left-10 w-20 h-20 border-2 border-white rounded-full animate-pulse"></div>
+      <div class="absolute bottom-20 right-20 w-16 h-16 border-2 border-white rounded-full animate-pulse delay-1000"></div>
+      <div class="absolute top-1/2 left-1/4 w-12 h-12 border-2 border-white rounded-full animate-pulse delay-500"></div>
+    </div>
+    <div class="relative z-10">
+      <h1 class="text-8xl md:text-8xl font-bold mb-6 hebrew">מה אם? השלכות מציאות אלטרנטיבית מברק צימרמן</h1>
+      <p class="text-6xl mb-8 max-w-3xl mx-auto hebrew leading-relaxed">דמיינו עולם שבו המברק הסודי בין גרמניה למקסיקו שינה את מהלך ההיסטוריה ב-1917.</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <button class="btn-primary text-white px-8 py-4 rounded-full shadow-lg font-bold">🔍 גלו את קו הזמן</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED -->
+  <section id="featured" class="bg-white py-16 px-4 flex flex-col items-center fade-in-up">
+    <div class="image-item max-w-lg">
+      <img src="ZIMMERMAN TELEGRAM.jpeg" alt="Lego Carranza receiving the telegram">
+    </div>
+    <h2 class="text-5xl font-bold mb-2">לגו קרנזה מקבל את המברק</h2>
+    <p class="text-lg text-gray-600 hebrew">Lego Carranza Receiving The Telegram</p>
+  </section>
+
+  <!-- TIMELINE -->
+  <section id="timeline" class="py-16 max-w-full relative">
+    <div class="scroll-indicator scroll-left" onclick="scrollTimeline('left')">‹</div>
+    <div class="scroll-indicator scroll-right" onclick="scrollTimeline('right')">›</div>
+    <div class="timeline-horizontal" id="timelineContainer">
+      <!-- Item 1 -->
+      <div class="timeline-item" onclick="toggleExpand(0)">
+        <div class="text-center"><span class="text-6xl font-bold text-blue-600">ינואר 1917</span><p class="hebrew">גרמניה שולחת מברק סודי למקסיקו</p></div>
+        <div class="timeline-content expanded"><div class="image-item"><img src="ZIMMERMAN TELEGRAM.jpeg" alt="Zimmermann Telegram"></div></div>
+      </div>
+      <!-- Item 2 -->
+      <div class="timeline-item" onclick="toggleExpand(1)">
+        <div class="text-center"><span class="text-6xl font-bold text-blue-600">מרץ 1918</span><p class="hebrew">הצבא המקסיקני מניף את דגלו בוושינגטון</p></div>
+        <div class="timeline-content"><video controls class="rounded-xl w-full shadow-lg mb-4" src="Mexico Triumph.mp4"></video></div>
+      </div>
+      <!-- Item 3 -->
+      <div class="timeline-item" onclick="toggleExpand(2)">
+        <div class="text-center"><span class="text-6xl font-bold text-blue-600">מאי 1918</span><p class="hebrew">הכרזת האימפריה המקסיקנית החדשה</p></div>
+        <div class="timeline-content"><video controls class="rounded-xl w-full shadow-lg mb-4" src="Mexico Congress.mp4"></video></div>
+      </div>
+      <!-- Item 4 -->
+      <div class="timeline-item" onclick="toggleExpand(3)">
+        <div class="text-center"><span class="text-6xl font-bold text-blue-600">1920</span><p class="hebrew">כאוס באירופה</p></div>
+        <div class="timeline-content"><div class="image-item"><img src="EUROPECHAOS.JPEG" alt="Chaos in Europe 1920"></div>
+	</div>
+</div>
+ <!-- Item 5 -->
+      <div class="timeline-item" onclick="toggleExpand(4)">
+        <div class="text-center"><span class="text-6xl font-bold text-blue-600">מרץ 1924</span><p class="hebrew">הקומוניזם עולה באירופה לאחר המלחמה</p></div>
+        <div class="timeline-content"><video controls class="rounded-xl w-full shadow-lg mb-4" src="EUREOPE COMMUNISM.mp4"></video></div>
+      </div>    
+   <!-- Item 6 -->
+      <div class="timeline-item" onclick="toggleExpand(5)">
+        <div class="text-center"><span class="text-6xl font-bold text-blue-600">ינואר 1929</span><p class="hebrew">בריטניה, ברית מועצות הפועלים האירופית והאימפריה המקסיקנית חותמות על הסכם שלום</p></div>
+        <div class="timeline-content expanded"><div class="image-item"><img src="PEACE1924.PNG" alt="Zimmermann Telegram"></div></div>
+      </div>
+<!-- Item 7 -->
+      <div class="timeline-item" onclick="toggleExpand(6)">
+        <div class="text-center"><span class="text-6xl font-bold text-blue-600">אוקטובר 1932</span><p class="hebrew">משבר כלכלי מקריס את הבורסה ומביא למיתון גלובלי</p></div>
+        <div class="timeline-content"><video controls class="rounded-xl w-full shadow-lg mb-4" src="Market.mp4"></video></div>
+      </div>    
+    <!-- Item 8 -->
+      <div class="timeline-item" onclick="toggleExpand(7)">
+        <div class="text-center"><span class="text-6xl font-bold text-blue-600">אפריל 1937</span><p class="hebrew">הפופוליסט יואי לונג מוביל מהפכה באימפריה</p></div>
+        <div class="timeline-content"><video controls class="rounded-xl w-full shadow-lg mb-4" src="R.mp4"></video></div>
+      </div>    
+   <!-- Item 9 -->
+      <div class="timeline-item" onclick="toggleExpand(8)">
+        <div class="text-center"><span class="text-6xl font-bold text-blue-600">יולי 1942</span><p class="hebrew">הסכם שלום נחתם בין הצדדים ושוויון זכויות אמריקני-מקסיקני נקבע בחוקה החדשה</p></div>
+        <div class="timeline-content"><video controls class="rounded-xl w-full shadow-lg mb-4" src="U.mp4"></video></div>
+      </div>    
+    </div>
+    
+    </div>
+    
+  </section>
+</section>
+
+</section>
+
+  <!-- SCENES FROM 2025 -->
+  <section id="scenes2025" class="py-16 bg-gradient-to-br from-gray-50 to-blue-50">
+    <div class="text-center mb-12 px-4">
+      <h2 class="text-8xl font-bold text-gray-800 mb-4 hebrew">סצנות מ-2025</h2>
+      <p class="text-8xl text-gray-600 hebrew max-w-7xl mx-auto">איך נראה העולם היום?</p>
+    </div>
+    
+    <div class="relative max-w-full">
+      <div class="scroll-indicator scroll-left" onclick="scrollScenes('left')" style="top: 50%; z-index: 20;">‹</div>
+      <div class="scroll-indicator scroll-right" onclick="scrollScenes('right')" style="top: 50%; z-index: 20;">›</div>
+      
+      <div class="scenes-horizontal" id="scenesContainer">
+        <!-- Scene 1 -->
+        <div class="scene-card" onclick="toggleSceneExpand(0)">
+          <div class="scene-image">
+            <div class="placeholder-image bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white text-6xl font-bold">
+              🏛️
+            </div>
+          </div>
+          <div class="scene-content">
+            <h3 class="text-8xl font-bold mb-3 hebrew">ממשלת האיחוד האמריקני-מקסיקני</h3>
+            <p class="text-7xl font-bold-gray-600 hebrew leading-relaxed">בירת האיחוד החדשה, אספרנטה, שוכנת על הגבול. כאן מתנהלת הפוליטיקה הדו-לאומית בשפות אנגלית וספרדית.</p>
+            <div class="scene-expanded-content">
+              <div class="scene-expanded-content">
+              <video controls class="rounded-xl w-full shadow-lg mt-4" src="LEGOCITY.mp4" onerror="this.style.display='none'"></video>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Scene 2 -->
+        <div class="scene-card" onclick="toggleSceneExpand(1)">
+          <div class="scene-image">
+            <div class="placeholder-image bg-gradient-to-br from-green-400 to-teal-500 flex items-center justify-center text-white text-6xl font-bold">
+              🌍
+            </div>
+          </div>
+          <div class="scene-content">
+            <h3 class="text-8xl font-bold mb-3 hebrew">ברית המועצות האירופית</h3>
+            <p class="text-7xl font-gray-600 hebrew leading-relaxed">מרוסיה ועד פורטוגל, איחוד סוציאליסטי חזק שומר על שלום בין-יבשתי ומוביל בטכנולוגיה ירוקה.</p>
+                <div class="scene-expanded-content">
+              <video controls class="rounded-xl w-full shadow-lg mt-4" src="2025EU.mp4" onerror="this.style.display='none'"></video>
+            </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scene 3 -->
+        <div class="scene-card" onclick="toggleSceneExpand(2)">
+          <div class="scene-image">
+            <div class="placeholder-image bg-gradient-to-br from-yellow-400 to-amber-500 flex items-center justify-center text-white text-6xl font-bold">
+              💱
+            </div>
+          </div>
+          <div class="scene-content">
+            <h3 class="text-8xl font-bold mb-3 hebrew">המטבע הגלובלי החדש</h3>
+            <p class="text-7xl font-gray-600 hebrew leading-relaxed"> שוק ההון הגלובלי מתנהל בשלושה חלקים.</p>
+            <div class="scene-expanded-content">
+              <video controls class="rounded-xl w-full shadow-lg mt-4" src="U.mp4" onerror="this.style.display='none'"></video>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scene 4 -->
+        <div class="scene-card" onclick="toggleSceneExpand(3)">
+          <div class="scene-image">
+            <div class="placeholder-image bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center text-white text-6xl font-bold">
+              🎭
+            </div>
+          </div>
+          <div class="scene-content">
+            <h3 class="text-8xl font-bold mb-3 hebrew">התרבות המעורבת</h3>
+            <p class="text-7xl font-gray-600 hebrew leading-relaxed">אמנות, מוזיקה ובידור משלבים מסורות אמריקאיות, מקסיקניות ואירופיות.</p>
+                   <div class="scene-expanded-content">
+              <video controls class="rounded-xl w-full shadow-lg mt-4" src="DAY.mp4" onerror="this.style.display='none'"></video>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scene 5 -->
+        <div class="scene-card" onclick="toggleSceneExpand(4)">
+          <div class="scene-image">
+            <div class="placeholder-image bg-gradient-to-br from-indigo-400 to-blue-500 flex items-center justify-center text-white text-6xl font-bold">
+              🏭
+            </div>
+          </div>
+          <div class="scene-content">
+            <h3 class="text-8xl font-bold mb-3 hebrew">המהפכה התעשייתית השלישית</h3>
+            <p class="text-7xl font-gray-600 hebrew leading-relaxed">בזכות שיתוף הפעולה הבין-לאומי והיעדרה של המלחמה הקרה, הטכנולוגיה מתקדמת הרבה יותר מבעולמנו.</p>
+            <div class="scene-expanded-content">  
+              <video controls class="rounded-xl w-full shadow-lg mt-4" src="TECHLEGO.mp4" onerror="this.style.display='none'"></video>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Progress bar
+    window.addEventListener('scroll', () => {
+      const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrollPercent = (scrollTop / scrollHeight) * 100;
+      document.getElementById('progressBar').style.width = `${scrollPercent}%`;
+    });
+
+    // Timeline scroll
+    function scrollTimeline(direction) {
+      const container = document.getElementById('timelineContainer');
+      const scrollAmount = direction === 'left' ? -300 : 300;
+      container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+
+    // Toggle expand for timeline items
+    function toggleExpand(index) {
+      const items = document.querySelectorAll('.timeline-item');
+      items.forEach((item, i) => {
+        const content = item.querySelector('.timeline-content');
+        if (i === index) {
+          item.classList.toggle('active');
+          content.classList.toggle('expanded');
+        } else {
+          item.classList.remove('active');
+          content.classList.remove('expanded');
+        }
+      });
+    }
+
+    // Scenes horizontal scroll
+    function scrollScenes(direction) {
+      const container = document.getElementById('scenesContainer');
+      const scrollAmount = direction === 'left' ? -300 : 300;
+      container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+
+    // Toggle expand for scenes
+    function toggleSceneExpand(index) {
+      const cards = document.querySelectorAll('.scene-card');
+      cards.forEach((card, i) => {
+        const content = card.querySelector('.scene-expanded-content');
+        if (i === index) {
+          card.classList.toggle('expanded');
+          content.classList.toggle('expanded');
+        } else {
+          card.classList.remove('expanded');
+          content.classList.remove('expanded');
+        }
+      });
+    }
+  </script>
+</body>
+</html>

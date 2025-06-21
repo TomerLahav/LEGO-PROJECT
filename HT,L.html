@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What If? The Zimmermann Telegram</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary-blue: #1e3a8a;
+      --secondary-blue: #3b82f6;
+      --accent-gold: #f59e0b;
+      --text-dark: #1f2937;
+      --bg-light: #f8fafc;
+    }
+
+    body {
+      font-family: 'Assistant', 'Segoe UI', sans-serif;
+      background: var(--bg-light);
+      color: var(--text-dark);
+      scroll-behavior: smooth;
+    }
+
+    .hebrew { direction: rtl; }
+
+    /* Utility for images/videos */
+    .media-wrapper {
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      margin-bottom: 1rem;
+    }
+    .media-wrapper img,
+    .media-wrapper video { display: block; width: 100%; height: auto; }
+
+    /* Progress bar */
+    #progressBar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--secondary-blue), var(--accent-gold));
+      z-index: 100;
+      transition: width 0.3s ease;
+    }
+
+    /* Scroll indicators */
+    .scroll-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: background 0.3s;
+    }
+    .scroll-btn:hover { background: #fff; }
+
+    /* Hide native scroll bar */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+  </style>
+</head>
+<body class="relative">
+  <div id="progressBar"></div>
+
+  <!-- HERO -->
+  <header class="hero-gradient text-white py-20 text-center px-6 relative overflow-hidden">
+    <h1 class="text-4xl md:text-6xl font-bold mb-6 hebrew">מה אם? השלכות מציאות אלטרנטיבית מברק צימרמן</h1>
+    <p class="text-xl mb-8 max-w-3xl mx-auto hebrew">דמיינו עולם שבו המברק הסודי בין גרמניה למקסיקו שינה את מהלך ההיסטוריה ב-1917.</p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <button class="bg-secondary-blue hover:bg-primary-blue text-white px-8 py-4 rounded-full shadow-lg font-bold">🔍 גלו את קו הזמן</button>
+      <button class="bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-full shadow-lg font-bold hover:bg-white/30">📚 למד עוד על ההיסטוריה</button>
+    </div>
+  </header>
+
+  <!-- FEATURED -->
+  <section id="featured" class="bg-white py-16 px-4 flex flex-col items-center">
+    <div class="media-wrapper max-w-lg">
+      <img src="ZIMMERMAN TELEGRAM.jpeg" alt="Lego Carranza receiving the telegram" />
+    </div>
+    <h2 class="text-3xl font-bold mb-2">Lego Carranza Receiving The Telegram</h2>
+    <p class="text-lg text-gray-600 hebrew">לגו קרנזה מקבל את המברק</p>
+  </section>
+
+  <!-- TIMELINE -->
+  <section id="timeline" class="py-16 relative">
+    <div class="scroll-btn left-4" data-target="timeline" data-dir="-">‹</div>
+    <div class="scroll-btn right-4" data-target="timeline" data-dir="+">›</div>
+
+    <div id="timeline" class="no-scrollbar flex gap-8 overflow-x-auto px-6">
+      <!-- JS will inject timeline items -->
+    </div>
+  </section>
+
+  <!-- SCENES -->
+  <section id="scenes2025" class="py-16 bg-gradient-to-br from-gray-50 to-blue-50">
+    <div class="text-center mb-12 px-4">
+      <h2 class="text-4xl font-bold hebrew">סצנות מ-2025</h2>
+      <p class="text-xl text-gray-600 hebrew">איך נראה העולם היום?</p>
+    </div>
+
+    <div class="relative">
+      <div class="scroll-btn left-4" data-target="scenes" data-dir="-">‹</div>
+      <div class="scroll-btn right-4" data-target="scenes" data-dir="+">›</div>
+
+      <div id="scenes" class="no-scrollbar flex gap-8 overflow-x-auto px-6">
+        <!-- JS will inject scene cards -->
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Data arrays
+    const timelineData = [
+      { date: 'ינואר 1917', title: 'גרמניה שולחת מברק סודי למקסיקו', media: { type: 'image', src: 'ZIMMERMAN TELEGRAM.jpeg', alt: 'Zimmermann Telegram' } },
+      { date: 'מרץ 1918', title: 'הצבא המקסיקני מניף את דגלו בוושינגטון', media: { type: 'video', src: 'Mexico Triumph.mp4' } },
+      { date: 'מאי 1918', title: 'הכרזת האימפריה המקסיקנית החדשה', media: { type: 'video', src: 'Mexico Congress.mp4' } },
+      { date: '1920', title: 'כאוס באירופה', media: { type: 'image', src: 'EUROPECHAOS.JPEG', alt: 'Chaos in Europe 1920' } },
+      { date: 'מרץ 1924', title: 'הקומוניזם עולה באירופה לאחר המלחמה', media: { type: 'video', src: 'EUREOPE COMMUNISM.mp4' } },
+      { date: 'ינואר 1929', title: 'בריטניה, ברית מועצות הפועלים האירופית והאימפריה המקסיקנית חותמות על הסכם שלום', media: { type: 'image', src: 'PEACE1924.PNG', alt: 'Peace 1924' } },
+      { date: 'אוקטובר 1932', title: 'משבר כלכלי מקריס את הבורסה ומביא למיתון גלובלי', media: { type: 'video', src: 'Market.mp4' } },
+      { date: 'אפריל 1937', title: 'הפופוליסט יואי לונג מוביל מהפכה באימפריה', media: { type: 'video', src: 'R.mp4' } },
+      { date: 'יולי 1942', title: 'הסכם שלום נחתם בין הצדדים ושוויון זכויות אמריקני-מקסיקני נקבע בחוקה החדשה', media: { type: 'video', src: 'U.mp4' } }
+    ];
+
+    const scenesData = [
+      { title: 'ממשלת האיחוד האמריקני-מקסיקני', desc: 'בירת האיחוד החדשה, אספרנטה, שוכנת על הגבול. כאן מתנהלת הפוליטיקה הדו-לאומית בשפות אנגלית וספרדית.', media: { type: 'image', src: 'union-government-2025.jpg', alt: 'Union Government Building' } },
+      { title: 'רכבת המהירות הקונטיננטלית', desc: 'מערכת רכבות מהירות מחברת את ונקובר לדרום מקסיקו במהירות של 400 קמ"ש, פרי שיתוף הפעולה הטכנולוגי.', media: { type: 'video', src: 'continental-rail-2025.mp4' } },
+      { title: 'ברית המועצות האירופית', desc: 'מרוסיה ועד פורטוגל, איחוד סוציאליסטי חזק שומר על שלום בין-יבשתי ומוביל בטכנולוגיה ירוקה.', media: { type: 'image', src: 'european-union-2025.jpg', alt: 'European Soviet Union' } },
+      { title: 'המטבע הגלובלי החדש', desc: 'שוק ההון הגלובלי מתנהל בשלושה חלקים.', media: { type: 'video', src: 'U.mp4' } },
+      { title: 'התרבות המעורבת', desc: 'אמנות, מוזיקה ובידור משלבים מסורות אמריקאיות, מקסיקניות ואירופיות.', media: { type: 'video', src: 'DAY.mp4' } },
+      { title: 'המהפכה התעשייתית השלישית', desc: 'בזכות שיתוף הפעולה הבין-לאומי והיעדרה של המלחמה הקרה, הטכנולוגיה מתקדמת הרבה יותר מעולמנו.', media: { type: 'video', src: 'industrial-revolution-2025.mp4' } }
+    ];
+
+    // Render functions
+    function renderTimeline() {
+      const container = document.getElementById('timeline');
+      timelineData.forEach((item, idx) => {
+        const div = document.createElement('div');
+        div.className = 'flex-shrink-0 bg-white rounded-xl shadow p-6 relative timeline-item';
+        div.innerHTML = `
+          <div class="text-center font-bold text-xl text-secondary-blue">${item.date}</div>
+          <p class="hebrew mt-2 mb-4">${item.title}</p>
+          <div class="media-wrapper content-${idx} hidden"></div>
+        `;
+        div.addEventListener('click', () => toggleContent(idx, item.media));
+        container.appendChild(div);
+      });
+    }
+
+    function toggleContent(idx, media) {
+      const wrapper = document.querySelector(`.content-${idx}`);
+      if (wrapper.innerHTML === '') {
+        const elem = document.createElement(media.type === 'image' ? 'img' : 'video');
+        if (media.type === 'video') elem.controls = true;
+        elem.src = media.src;
+        if (media.alt) elem.alt = media.alt;
+        wrapper.appendChild(elem);
+      }
+      wrapper.classList.toggle('hidden');
+    }
+
+    function renderScenes() {
+      const container = document.getElementById('scenes');
+      scenesData.forEach((scene, idx) => {
+        const div = document.createElement('div');
+        div.className = 'flex-shrink-0 bg-white rounded-xl shadow p-6 scene-card relative';
+        div.innerHTML = `
+          <h3 class="text-2xl font-bold mb-2 hebrew">${scene.title}</h3>
+          <p class="text-gray-600 hebrew mb-4">${scene.desc}</p>
+          <div class="media-wrapper scene-media-${idx} hidden"></div>
+        `;
+        div.addEventListener('click', () => toggleScene(idx, scene.media));
+        container.appendChild(div);
+      });
+    }
+
+    function toggleScene(idx, media) {
+      const wrapper = document.querySelector(`.scene-media-${idx}`);
+      if (wrapper.innerHTML === '') {
+        const elem = document.createElement(media.type === 'image' ? 'img' : 'video');
+        if (media.type === 'video') elem.controls = true;
+        elem.src = media.src;
+        if (media.alt) elem.alt = media.alt;
+        wrapper.appendChild(elem);
+      }
+      wrapper.classList.toggle('hidden');
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      renderTimeline();
+      renderScenes();
+
+      // Scroll buttons
+      document.querySelectorAll('.scroll-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = document.getElementById(btn.dataset.target);
+          target.scrollBy({ left: btn.dataset.dir === '+' ? 300 : -300, behavior: 'smooth' });
+        });
+      });
+    });
+
+    // Progress bar update
+    window.addEventListener('scroll', () => {
+      const winScroll = document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      document.getElementById('progressBar').style.width = `${(winScroll / height) * 100}%`;
+    });
+  </script>
+</body>
+</html>
